@@ -26,9 +26,8 @@ Puppet::Network::FormatHandler.create(:yaml, :mime => "text/yaml") do
         yaml
     end
 
-    # Everything's supported unless you're on 1.8.1
     def supported?(klass)
-        RUBY_VERSION != '1.8.1'
+        true
     end
 
     # fixup invalid yaml as per:
@@ -79,9 +78,8 @@ Puppet::Network::FormatHandler.create(:b64_zlib_yaml, :mime => "text/b64_zlib_ya
         yaml
     end
 
-    # Because of yaml issue in ruby 1.8.1...
     def supported?(klass)
-        RUBY_VERSION != '1.8.1' and use_zlib?
+        use_zlib?
     end
 
     # fixup invalid yaml as per:
