@@ -81,6 +81,10 @@ class Puppet::Network::HTTP::Pool
 
       Puppet.debug("Starting connection for #{site}")
       http.start
+
+      socket = http.instance_variable_get :@socket
+      socket.io.setsockopt(Socket::SOL_SOCKET, Socket::SO_KEEPALIVE, true)
+
       http
     end
   end
