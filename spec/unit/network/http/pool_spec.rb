@@ -150,6 +150,7 @@ describe Puppet::Network::HTTP::Pool do
       conn = create_connection(site)
       pool = create_pool
       pool.factory.expects(:create_connection).with(site).returns(conn)
+      pool.expects(:setsocket)
 
       expect(pool.borrow(site, verify)).to eq(conn)
     end
@@ -169,6 +170,7 @@ describe Puppet::Network::HTTP::Pool do
 
       conn = create_connection(site)
       pool.factory.expects(:create_connection).with(site).returns(conn)
+      pool.expects(:setsocket)
 
       expect(pool.borrow(site, verify)).to eq(conn)
     end
@@ -179,6 +181,7 @@ describe Puppet::Network::HTTP::Pool do
 
       pool = create_pool
       pool.factory.expects(:create_connection).with(site).returns(conn)
+      pool.expects(:setsocket)
 
       expect(pool.borrow(site, verify)).to eq(conn)
     end
@@ -205,6 +208,7 @@ describe Puppet::Network::HTTP::Pool do
 
       pool = create_pool_with_expired_connections(site, conn)
       pool.factory.expects(:create_connection => stub('conn', :start => nil))
+      pool.expects(:setsocket)
 
       pool.borrow(site, verify)
     end
@@ -217,6 +221,7 @@ describe Puppet::Network::HTTP::Pool do
 
       pool = create_pool_with_expired_connections(site, conn)
       pool.factory.expects(:create_connection => stub('open_conn', :start => nil))
+      pool.expects(:setsocket)
 
       pool.borrow(site, verify)
     end

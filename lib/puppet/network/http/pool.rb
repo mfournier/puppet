@@ -81,12 +81,14 @@ class Puppet::Network::HTTP::Pool
 
       Puppet.debug("Starting connection for #{site}")
       http.start
-
-      socket = http.instance_variable_get :@socket
-      socket.io.setsockopt(Socket::SOL_SOCKET, Socket::SO_KEEPALIVE, true)
-
+      setsocket(http)
       http
     end
+  end
+
+  def setsocket(http)
+    socket = http.instance_variable_get(:@socket)
+    socket.io.setsockopt(Socket::SOL_SOCKET, Socket::SO_KEEPALIVE, true)
   end
 
   # Release a connection back into the pool.
